@@ -11,17 +11,14 @@
       <dt>Email</dt>
       <dd><%= @user.email %></dd>
 
+      <dt>Password</dt>
+      <dd><%= @user.password %></dd>
+
     </dl>
 
     <div class="btn-group btn-group-justified">
       <a href="/users" class="btn btn-primary">
         Back
-      </a>
-      <a href="/users/<%= @user.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_user/<%= @user.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
       </a>
     </div>
   </div>
@@ -54,29 +51,37 @@
           </div>
         </li>
       <% end %>
+    </ul>
+  </div>
+</div>
 
-      <li class="list-group-item">
-        <form action="/create_like" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+<!-- A User has many comments -->
 
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= @user.id %>">
-
-      <!-- Label and input for photo_id -->
-      <div class="form-group">
-        <label for="photo_id" class="control-label">
-          Photo
-        </label>
-
-        <%= select_tag(:photo_id, options_from_collection_for_select(Photo.all, :id, :image), :class => "form-control") %>
-      </div>
-
-      <button class="btn btn-block btn-success">
-        Create Like
-      </button>
-    </form>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Comments
       </li>
+
+      <% @user.comments.each do |comment| %>
+        <li class="list-group-item">
+          <a href="/comments/<%= comment.id %>">
+            <%= comment.user_id %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/comments/<%= comment.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
@@ -108,35 +113,6 @@
           </div>
         </li>
       <% end %>
-
-      <li class="list-group-item">
-        <form action="/create_friend_request" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for sender_id -->
-      <div class="form-group">
-        <label for="sender_id" class="control-label">
-          Sender
-        </label>
-
-        <%= select_tag(:sender_id, options_from_collection_for_select(User.all, :id, :username), :class => "form-control") %>
-      </div>
-
-      <!-- Label and input for recipient_id -->
-      <div class="form-group">
-        <label for="recipient_id" class="control-label">
-          Recipient
-        </label>
-
-        <input type="text" id="recipient_id" name="recipient_id" placeholder="Recipient" class="form-control" value="">
-      </div>
-
-      <button class="btn btn-block btn-success">
-        Create Friend Request
-      </button>
-    </form>
-      </li>
     </ul>
   </div>
 </div>
