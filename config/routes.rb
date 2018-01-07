@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   root :to => "photos#index"
   # Routes for the Friend_request resource:
   # CREATE
