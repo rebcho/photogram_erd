@@ -1,14 +1,19 @@
 <div class="page-header">
   <h1>
-    Likes
-    <a href="/likes/new" class="btn btn-lg btn-success">New Like</a>
+    Comments
+    <a href="/comments/new" class="btn btn-lg btn-success">New Comment</a>
   </h1>
 </div><div class="row mb-1">
   <div class="col-md-12">
-    <%= search_form_for @q, :class => collapse_search_form, :id => "likes_filters" do |f| %>
+    <%= search_form_for @q, :class => collapse_search_form, :id => "comments_filters" do |f| %>
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
+    <%= f.label :text_cont, "Text contains" %>
+    <%= f.text_field :text_cont, :class => "form-control", :placeholder => "Text contains" %>
+  </div>
+
+<div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -55,9 +60,9 @@
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
-      <a href="/likes" class="btn btn-default btn-block mb-1">Clear filters</a>
+      <a href="/comments" class="btn btn-default btn-block mb-1">Clear filters</a>
     <% end %>
-    <a class="btn btn-default btn-block mb-1" data-toggle="collapse" href="#likes_filters">
+    <a class="btn btn-default btn-block mb-1" data-toggle="collapse" href="#comments_filters">
       Show Filters
     </a>
   </div>
@@ -69,33 +74,35 @@
       <tr>
         <th>User</th>
         <th>Photo</th>
+        <th>Text</th>
         <th>Actions</th>
       </tr>
 
-      <% @likes.each do |like| %>
+      <% @comments.each do |comment| %>
       <tr>
         <td>
-          <% if like.user.present? %>
-            <a href="/users/<%= like.user.id %>">
-              <%= like.user.username %>
+          <% if comment.user.present? %>
+            <a href="/users/<%= comment.user.id %>">
+              <%= comment.user.username %>
             </a>
           <% end %>
         </td>
         <td>
-          <% if like.photo.present? %>
-            <a href="/photos/<%= like.photo.id %>">
-              <%= like.photo.image %>
+          <% if comment.photo.present? %>
+            <a href="/photos/<%= comment.photo.id %>">
+              <%= comment.photo.image %>
             </a>
           <% end %>
         </td>
+        <td><%= comment.text %></td>
         <td>
-          <a href="/likes/<%= like.id %>" class="btn btn-primary">Show</a>
-          <a href="/likes/<%= like.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_like/<%= like.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <a href="/comments/<%= comment.id %>" class="btn btn-primary">Show</a>
+          <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
         </td>
       </tr>
       <% end %>
     </table>
-    <%= paginate @likes, theme: 'twitter-bootstrap-4' %>
+    <%= paginate @comments, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>
