@@ -9,23 +9,6 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
-    <%= f.label :image_cont, "Image contains" %>
-    <%= f.text_field :image_cont, :class => "form-control", :placeholder => "Image contains" %>
-  </div>
-
-<div class="form-group">
-  <%= f.label :user_id, "User" %>
-  <div class="row">
-    <div class='col-md-6 mb-1'>
-      <%= f.text_field :user_id_gteq, :class => "form-control", :placeholder => "User greater than or equal to" %>
-    </div>
-    <div class='col-md-6'>
-      <%= f.text_field :user_id_lteq, :class => "form-control", :placeholder => "User less than or equal to" %>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
     <%= f.label :caption_cont, "Caption contains" %>
     <%= f.text_field :caption_cont, :class => "form-control", :placeholder => "Caption contains" %>
   </div>
@@ -71,8 +54,18 @@
       </script>
 
         <div class="form-group">
-      <%= f.label :likers_username_cont, "User username contains" %>
-      <%= f.text_field :likers_username_cont, :class => "form-control", :placeholder => "User username contains" %>
+      <%= f.label :comments_text_cont, "Comment text contains" %>
+      <%= f.text_field :comments_text_cont, :class => "form-control", :placeholder => "Comment text contains" %>
+    </div>
+
+<div class="form-group">
+      <%= f.label :user_username_cont, "User username contains" %>
+      <%= f.text_field :user_username_cont, :class => "form-control", :placeholder => "User username contains" %>
+    </div>
+
+<div class="form-group">
+      <%= f.label :fans_username_cont, "User username contains" %>
+      <%= f.text_field :fans_username_cont, :class => "form-control", :placeholder => "User username contains" %>
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
@@ -97,9 +90,15 @@
 
       <% @photos.each do |photo| %>
       <tr>
-        <td><%= photo.image %></td>
+        <td><img src='<%= photo.image %>' class='img-responsive'></td>
         <td><%= photo.caption %></td>
-        <td><%= photo.user_id %></td>
+        <td>
+          <% if photo.user.present? %>
+            <a href="/users/<%= photo.user.id %>">
+              <%= photo.user.username %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>
           <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">Edit</a>
